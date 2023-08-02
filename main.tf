@@ -1,3 +1,4 @@
+# creating vpc
 resource "aws_vpc" "vpc_prac" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -6,7 +7,7 @@ resource "aws_vpc" "vpc_prac" {
     Name = "vpc_prac"
   }
 }
-
+#provisioning 4 subnets with different cidr block specifications
 resource "aws_subnet" "prac-sub-1" {
   vpc_id     = aws_vpc.vpc_prac.id
   cidr_block = "10.0.1.0/26"
@@ -44,6 +45,7 @@ resource "aws_subnet" "prac-sub-4" {
   }
 }
 
+#provisioning  2 route table for public and private traffic/commun
 resource "aws_route_table" "public-rt" {
   vpc_id = aws_vpc.vpc_prac.id
 
@@ -60,6 +62,7 @@ resource "aws_route_table" "private-rt" {
   }
 }
 
+#internet gateway provision
 resource "aws_internet_gateway" "prac-igw" {
   vpc_id = aws_vpc.vpc_prac.id
 
@@ -68,7 +71,7 @@ resource "aws_internet_gateway" "prac-igw" {
   }
 }
 
-
+# route table association with the subnets, 2 subnets to each route table
 resource "aws_route_table_association" "public-rta-a" {
   subnet_id      = aws_subnet.prac-sub-1.id
   route_table_id = aws_route_table.public-rt.id
@@ -89,6 +92,7 @@ resource "aws_route_table_association" "private-rta-b" {
   route_table_id = aws_route_table.private-rt.id
 }
 
+# internet gateway route association to route table
 resource "aws_route" "public-igw-route" {
   route_table_id            = aws_route_table.public-rt.id
   destination_cidr_block    = "0.0.0.0/0"
