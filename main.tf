@@ -6,14 +6,6 @@ resource "aws_vpc" "vpc_prac" {
     Name = "vpc_prac"
   }
 }
-resource "aws_subnet" "prac-sub-1" {
-  vpc_id     = aws_vpc.vpc_prac.id
-  cidr_block = "10.0.1.0/24"
-
-  tags = {
-    Name = "prac-sub-1"
-  }
-}
 
 resource "aws_subnet" "prac-sub-1" {
   vpc_id     = aws_vpc.vpc_prac.id
@@ -23,10 +15,11 @@ resource "aws_subnet" "prac-sub-1" {
     Name = "prac-sub-1"
   }
 }
+
 
 resource "aws_subnet" "prac-sub-2" {
   vpc_id     = aws_vpc.vpc_prac.id
-  cidr_block = "10.0.1.0/26"
+  cidr_block = "10.0.2.0/26"
 
   tags = {
     Name = "prac-sub-2"
@@ -35,7 +28,7 @@ resource "aws_subnet" "prac-sub-2" {
 
 resource "aws_subnet" "prac-sub-3" {
   vpc_id     = aws_vpc.vpc_prac.id
-  cidr_block = "10.0.1.0/26"
+  cidr_block = "10.0.3.0/26"
 
   tags = {
     Name = "prac-sub-3"
@@ -44,7 +37,7 @@ resource "aws_subnet" "prac-sub-3" {
 
 resource "aws_subnet" "prac-sub-4" {
   vpc_id     = aws_vpc.vpc_prac.id
-  cidr_block = "10.0.1.0/26"
+  cidr_block = "10.0.4.0/26"
 
   tags = {
     Name = "prac-sub-4"
@@ -71,7 +64,7 @@ resource "aws_internet_gateway" "prac-igw" {
   vpc_id = aws_vpc.vpc_prac.id
 
   tags = {
-    Name = "vpc_prac"
+    Name = "prac-igw"
   }
 }
 
@@ -101,5 +94,4 @@ resource "aws_route" "public-igw-route" {
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id     = aws_internet_gateway.prac-igw.id
 }
-
 
